@@ -1,0 +1,143 @@
+{% load static %}
+<nav class="navbar fixed-top navbar-expand-sm bg-info navbar-dark mb-2">
+
+  <!-- Brand/logo -->
+  <a class="navbar-brand" href="{% url 'hm' %}">
+    <img src="{% static 'images/libnew.jpg' %}" alt="logo" style="width:40px;">
+  </a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="collapsibleNavbar">
+  <!-- Links -->
+  <ul class="navbar-nav">
+    {% if not user.is_authenticated %}
+    <li class="nav-item">
+      <a class="nav-link" href="{% url 'hm' %}">Home</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" href="{% url 'at' %}">AboutUs</a>
+    </li>
+   
+    
+    <li class="nav-item">
+      <a class="nav-link" href="{% url 'ct' %}">Contact Details</a>
+    </li>
+    
+    {% else %}
+    {% if user.is_superuser %}
+     <li class="nav-item">
+      <a class="nav-link" href="{% url 'hm' %}">Home</a>
+    </li>
+     <li class="nav-item">
+      <a class="nav-link" href="{% url 'dsh' %}">Dashboard</a>
+      
+    </li>
+    </li>
+     <li class="nav-item">
+      <a class="nav-link" href="{% url 'books_avail' %}">Books_available</a>
+      
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" href="{% url 'gperm' %}">Grant Permission</a>
+      
+    </li>
+   
+    
+    <li class="dropdown">
+      <a type="button" class="nav-link dropdown-toggle" data-toggle="dropdown">Books Status</a>
+       
+      <div class="dropdown-menu">
+        <a class="dropdown-item" href="{% url 'issue_book' %}">Issued Books</a>
+      <a class="dropdown-item" href="{% url 'Return_book' %}">Return Books</a></div>
+    </li>
+    <li class="nav-item" style='display:inline'>
+      <a class="nav-link" href="{% url 'fine' %}">Fines List</a><!-- <sub class="text-light">View<sup class="text-danger">{{d}}</sup></sub> -->
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" href="{% url 'viewn' %}">Students Requests</a>
+      
+    </li>
+     
+     
+    {% else %}
+   {% if user.role == 1 or user.role == 3 %}
+      <li class="nav-item">
+      <a class="nav-link" href="{% url 'hm' %}">Home</a>
+    </li>
+     <li class="nav-item">
+      <a class="nav-link" href="{% url 'dsh' %}">Dashboard</a>
+    </li>
+   
+    <li class="nav-item">
+      <a class="nav-link" href="{% url 'ct' %}">ContactUs</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" href="{% url 'studentbooks_avail' %}">Books Available</a>
+      
+    </li>
+    <!-- <li class="nav-item">
+      <a class="nav-link" href="">Make Requests</a>
+      
+    </li> -->
+     <li class="nav-item">
+      <a class="nav-link" href="{% url 'bk' %}">Books u have</a>
+      
+    </li>
+    
+    <li class="nav-item">
+        <a class="nav-link" href="{% url 'myreq' %}">View Myreq</a>
+      </li>
+    
+    {% else %}
+    <li class="nav-item">
+      <a class="nav-link" href="{% url 'hm' %}">Home</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" href="{% url 'at' %}">AboutUs</a>
+    </li>
+   
+    
+    <li class="nav-item">
+      <a class="nav-link" href="{% url 'ct' %}">Contact Details</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" href="{% url 'profile' %}">Profile</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" href="{% url 'pm' %}">Make Permission</a>
+    </li>
+    {% endif %}
+
+    {% endif %}
+
+    {% endif %}
+  </ul>
+  <ul class="navbar-nav ml-auto" style="margin-right:60px">
+    {% if not user.is_authenticated %}
+    <li class="nav-item">
+      <a class="nav-link" href="{% url 'log' %}">LogIn</a>
+    </li>
+
+    {% else %}
+  <li class="dropdown">
+    <a type="button" class="nav-link dropdown-toggle" data-toggle="dropdown">
+      {% if user.role == 1 or user.is_superuser or user.role == 3 %}
+      {{user.username}}
+       {% else %}
+       Guest
+       {% endif %}
+    </a>
+    <div class="dropdown-menu">
+      <a class="dropdown-item" href="{% url 'cg' %}">Change Password</a>
+      <a class="dropdown-item" href="{% url 'profile' %}">Profile</a>
+      <a class="dropdown-item" href="{% url 'logo' %}">Logout</a>
+
+    </div>
+</li>
+{% endif %}
+</ul>
+</div>
+</nav>
+<br>
+<br>

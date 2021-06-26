@@ -1,0 +1,73 @@
+{% extends 'html/base.html' %}
+{% load static %}
+{% block title %}allnotes{% endblock %}
+
+{% block content %}
+<script>
+	$(document).on('click', '.confirm-delete', function(){
+    return confirm('Are you sure you want to delete this?');
+})
+	$(document).on('click', '.confirm-accept', function(){
+    return confirm('Are you sure you want to accept this?');
+})
+	$(document).on('click', '.confirm-reject', function(){
+    return confirm('Are you sure you want to reject this?');
+})
+</script>
+<div class="text-center text-danger">
+	<br>
+	<span><i>View Accepted Notifications</i></span>
+	
+</div>
+<hr>
+
+<div class="container">
+	<table class="table table-bordered">
+		<input type="button" value="Go back!" onclick="history.back()" class="btn btn-info">
+		<tr class="bg bg-info">
+			<td>S.No</td>
+			<td>Book_Name</td>
+			<td>Book_Author</td>
+			<td>Issue_Date</td>
+			<td>expire_date</td>
+			<td>Fine</td>
+			<td>Action</td>
+		</tr>
+		{% for i in y %}
+		{% if i.issue_status == 1 or i.issue_status == 3 %}
+		<tr>
+			<td>{{forloop.counter}}</td>
+			<td>{{i.Book_name}}</td>
+			<td>{{i.Book_author}}</td>
+			<td>{{i.Issue_date}}</td>
+			<td>{{i.Expire_date}}</td>
+			<td>
+				<p>
+  				
+ 					 <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+					    check here
+					  </button>
+				</p>
+				<div class="collapse" id="collapseExample">
+					  <div class="card card-body">
+  				 You have Rs.{{i.Fine}} of fine.  
+  					</div>
+
+		    
+		  		
+			
+			</td>
+			{% if i.issue_status == 3 %}
+			<td class="bg-danger">Returned</td>
+			{% else %}
+			<td><a href="{% url 'books_return' i.id %}" class="btn btn-primary ">Return</a>  
+                    </td>
+               {% endif %}
+				</tr>
+		</tr>
+		{% endif %}
+		{% endfor %}
+	</table>
+</div>
+<br><br><br><br><br>
+{% endblock %}
